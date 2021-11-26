@@ -8,12 +8,16 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *  session controller for Authenticated's
+ * this class inherits from controller class 
+ */
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * show the login view.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View 
      */
     public function create()
     {
@@ -21,10 +25,10 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * this function is for handling and incoming authentication request.
      *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  \App\Http\Requests\Auth\LoginRequest  $login request.
+     * @return \Illuminate\Http\RedirectResponse response 
      */
     public function store(LoginRequest $request)
     {
