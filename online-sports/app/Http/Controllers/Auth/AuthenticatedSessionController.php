@@ -8,25 +8,30 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *  session controller for Authenticated's
+ * this class inherits from controller class 
+ */
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * show the login view.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View view
      */
     public function create()
     {
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(LoginRequest $request)
+    /** 
+     * this function is for handling and incoming authentication request.
+     * 
+     * @param  \App\Http\Requests\Auth\LoginRequest  $login request.
+     * @return \Illuminate\Http\RedirectResponse response 
+    */
+
+     public function store(LoginRequest $request)
     {
         $request->authenticate();
 
@@ -35,12 +40,13 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    /**
-     * Destroy an authenticated session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    /** 
+     * this function is for destroying a session which is authenticated.
+     * 
+     * @param  \Illuminate\Http\Request  $request for the function
+     * @return \Illuminate\Http\RedirectResponse response
+    */
+
     public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
