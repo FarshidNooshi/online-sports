@@ -21,7 +21,6 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->integer('country_id');
             $table->string('country_name');
-            $table->longText('country_logo');
             $table->timestamps();
         });
     }
