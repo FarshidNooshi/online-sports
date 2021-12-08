@@ -22,12 +22,7 @@ class Competition extends Model
      * @var array
      */
     protected $fillable = [
-        "country_id",
-        "country_name",
         "league_id",
         "league_name",
-        "league_season",
-        "league_logo",
-        "country_logo"
     ];
 }

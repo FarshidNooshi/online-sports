@@ -19,13 +19,8 @@ class CreateCompetitionsTable extends Migration
     {
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
-            $table->integer('country_id');
-            $table->string('country_name');
             $table->integer('league_id');
             $table->string('league_name');
-            $table->string('league_season');
-            $table->longText('league_logo');
-            $table->longText('country_logo');
             $table->timestamps();
         });
     }
