@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Web controller handles the requests API.
@@ -27,36 +29,36 @@ class WebController extends Controller
         $to = $request->get('to');
 
         $competitions = Competition::all();
-
         $data = [];
 
         foreach ($competitions as $competition) {
             $league_id = $competition->league_id;
             $APIkey = $this->API_KEY;
+            $URL = "https://apiv3.apifootball.com/?action=get_events&from=$from&to=$to&league_id=$league_id&APIkey=$APIkey";
 
-            $curl_options = array(
-                CURLOPT_URL => "https://apiv3.apifootball.com/?action=get_events&from=$from&to=$to&league_id=$league_id&APIkey=$APIkey",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_HEADER => false,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_CONNECTTIMEOUT => 5
-            );
+            $curl = curl_init($URL);
+            curl_setopt($curl, CURLOPT_URL, $URL);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            $curl = curl_init();
-            curl_setopt_array($curl, $curl_options);
-            $response = curl_exec($curl);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-            $response = (array) json_decode($response);
+            Log::alert('Before send');
+            $resp = curl_exec($curl);
+            curl_close($curl);
+
+            Log::alert('Got here');
+            var_dump($resp);
 
             $data[$competition->id] = [
                 'league_name' => $competition->league_name,
-                'matches' => $response
+                'matches' => var_export($resp)
             ];
         }
 
         return response()
             ->json([
-                'data' => $data,
+                $data
             ]);
     }
 }
