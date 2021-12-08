@@ -21,6 +21,8 @@ class Country extends Model
      * @var array
      */
     protected $fillable = [
-
+        'country_id',
+        'country_name',
+        'country_logo'
     ];
 }
