@@ -6,7 +6,6 @@ use App\Models\Competition;
 use App\Models\Country;
 use App\Models\Team;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * Web controller handles the requests API.
