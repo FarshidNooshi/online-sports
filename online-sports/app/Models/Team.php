@@ -21,6 +21,8 @@ class Team extends Model
      * @var array
      */
     protected $fillable = [
-
+        'team_key',
+        'team_name',
+        'team_badge'
     ];
 }
