@@ -17,14 +17,13 @@ class CountrySeeder extends Seeder
         // Italy
         Country::factory(1)
             ->create([
-                'country_id' => '8',
-                'country_name' => 'Italy',
-                'country_logo' => ''
+                'country_id' => '5',
+                'country_name' => 'Italy'
             ]);
         // Spain
         Country::factory(1)
             ->create([
-                'country_id' => '8',
+                'country_id' => '6',
                 'country_name' => 'Spain'
             ]);
         // England
@@ -36,19 +35,19 @@ class CountrySeeder extends Seeder
         // France
         Country::factory(1)
             ->create([
-                'country_id' => '8',
+                'country_id' => '3',
                 'country_name' => 'France',
             ]);
         // Germany
         Country::factory(1)
             ->create([
-                'country_id' => '8',
+                'country_id' => '4',
                 'country_name' => 'Germany',
             ]);
         // Iran
         Country::factory(1)
             ->create([
-                'country_id' => '8',
+                'country_id' => '60',
                 'country_name' => 'Iran',
             ]);
         // Euro
@@ -56,12 +55,6 @@ class CountrySeeder extends Seeder
             ->create([
                 'country_id' => '1',
                 'country_name' => 'Eurocups'
-            ]);
-        // World
-        Country::factory(1)
-            ->create([
-                'country_id' => '8',
-                'country_name' => 'Worldcup'
             ]);
     }
 }
