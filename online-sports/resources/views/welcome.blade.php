@@ -38,6 +38,19 @@
             @endif
 
             <div class="container mt-14 mx-auto p-3 max-w-xl text-white" id="matches_container">
+                <div class="animate-pulse flex flex-col">
+                    @for ($i = 0; $i < 10; $i++)
+                        <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 40px 25px 1fr;">
+                            <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
+                            <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                            <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
+                                <div class="bg-gray-300 h-4 w-full"></div>
+                            </div>
+                            <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                            <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
+                        </div>    
+                    @endfor
+                </div>
             </div>
         </div>
         <script>
