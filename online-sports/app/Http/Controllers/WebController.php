@@ -43,12 +43,8 @@ class WebController extends Controller
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-            Log::alert('Before send');
             $resp = curl_exec($curl);
             curl_close($curl);
-
-            Log::alert('Got here');
-            var_dump($resp);
 
             $data[$competition->id] = [
                 'league_name' => $competition->league_name,
