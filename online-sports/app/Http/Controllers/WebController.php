@@ -56,6 +56,10 @@ class WebController extends Controller
         }
 
         return response()
-            ->json($data);
+            ->json([
+                'html' => view('components.match.results-table', [
+                    'data' => $data
+                ])->render()
+            ]);
     }
 }
