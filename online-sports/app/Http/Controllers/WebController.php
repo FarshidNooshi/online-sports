@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Web controller handles the requests API.
@@ -46,9 +44,14 @@ class WebController extends Controller
             $resp = curl_exec($curl);
             curl_close($curl);
 
+            $response = json_decode($resp, true);
+            if (isset($response['error']) && $response['error'] == 404) {
+                continue;
+            }
+
             $data[$competition->id] = [
                 'league_name' => $competition->league_name,
-                'matches' => json_decode($resp, true)
+                'matches' => $response
             ];
         }
 
