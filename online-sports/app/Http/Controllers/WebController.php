@@ -48,13 +48,13 @@ class WebController extends Controller
 
             $data[$competition->id] = [
                 'league_name' => $competition->league_name,
-                'matches' => var_export($resp)
+                'matches' => json_decode($resp, true)
             ];
         }
 
         return response()
             ->json([
-                'data' => $data
+                $data
             ]);
     }
 }
