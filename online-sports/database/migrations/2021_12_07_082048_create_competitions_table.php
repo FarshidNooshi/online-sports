@@ -21,6 +21,7 @@ class CreateCompetitionsTable extends Migration
             $table->id();
             $table->integer('league_id');
             $table->string('league_name');
+            $table->string('league_badge');
             $table->timestamps();
         });
     }

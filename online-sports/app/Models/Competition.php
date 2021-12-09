@@ -24,5 +24,6 @@ class Competition extends Model
     protected $fillable = [
         "league_id",
         "league_name",
+        "league_badge",
     ];
 }

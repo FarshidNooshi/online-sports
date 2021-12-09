@@ -51,11 +51,16 @@ class WebController extends Controller
 
             $data[] = [
                 'league_name' => $competition->league_name,
+                'league_badge' => $competition->league_badge,
                 'matches' => $response
             ];
         }
 
         return response()
-            ->json($data);
+            ->json([
+                'html' => view('components.match.results-table', [
+                    'data' => $data
+                ])->render()
+            ]);
     }
 }
