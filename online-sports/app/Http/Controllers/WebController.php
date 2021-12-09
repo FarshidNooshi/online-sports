@@ -23,8 +23,8 @@ class WebController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $from = $request->get('from');
-        $to = $request->get('to');
+        $from = $request->get('from', date('Y-m-d'));
+        $to = $request->get('to', date('Y-m-d'));
 
         $competitions = Competition::all();
         $data = [];
@@ -49,15 +49,13 @@ class WebController extends Controller
                 continue;
             }
 
-            $data[$competition->id] = [
+            $data[] = [
                 'league_name' => $competition->league_name,
                 'matches' => $response
             ];
         }
 
         return response()
-            ->json([
-                $data
-            ]);
+            ->json($data);
     }
 }
