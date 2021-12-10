@@ -75,6 +75,10 @@ class WebController extends Controller
         $teams = Team::all();
 
         return response()
-            ->json($teams->toArray());
+            ->json([
+                'html' => view('components.team.team', [
+                    'teams' => $teams
+                ])->render()
+            ]);
     }
 }

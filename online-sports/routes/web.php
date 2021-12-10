@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/Teams', function() {
+Route::get('/teams', function() {
     return view('Favorite');
 });
 

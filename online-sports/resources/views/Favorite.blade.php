@@ -22,6 +22,90 @@
     </style>
 </head>
 <body class="antialiased">
-    <h1 class="text-center"> salam </h1>
+<div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    @if (Route::has('login'))
+        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            @auth
+                <a href="{{ url('/teams') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
+
+    <div class="container min-h-screen mt-14 mx-auto p-3 max-w-xl">
+
+        <div id="teams_container" class="text-white">
+            <div class="animate-pulse flex flex-col">
+                @for ($i = 0; $i < 13; $i++)
+                    <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
+                        <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
+                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                        <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
+                            <div class="bg-gray-300 h-4 w-full"></div>
+                        </div>
+                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                        <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
+                    </div>
+                @endfor
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    let url = '/api/teams';
+    let interval = null;
+    let xhr = null;
+    const getTeams = () => {
+        xhr = $.ajax({
+            url: url,
+            type: 'GET',
+            async: true,
+            cache: false,
+            success: function (data) {
+                if (data.html.length > 0) {
+                    document.getElementById('teams_container').innerHTML = data.html;
+                } else {
+                    document.getElementById('teams_container').innerHTML = '<h2 class="text-center text-red-400 animate-pulse">No teams found</h2>';
+                }
+            },
+        });
+    }
+    getTeams();
+
+    // document.querySelector('#date_input').addEventListener('change', (e) => {
+    //     url = '/api/events?from=' + e.target.value + '&to=' + e.target.value;
+    //
+    //     let loader = `
+    //             <div id="teams_container" class="text-white">
+    //                 <div class="animate-pulse flex flex-col">`;
+    //     for (let i = 0; i < 13; i++) {
+    //         loader += `
+    //                 <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
+    //                     <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
+    //                     <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+    //                     <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
+    //                         <div class="bg-gray-300 h-4 w-full"></div>
+    //                     </div>
+    //                     <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+    //                     <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
+    //                 </div>`;
+    //     }
+    //     loader += `
+    //                 </div>
+    //             </div>`;
+    //     document.getElementById('teams_container').innerHTML = loader;
+    //
+    //     xhr.abort();
+    // });
+</script>
 </body>
 </html>
