@@ -97,14 +97,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Request $request
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
         DB::table('teams_users')
             ->where('user_id', '=', Auth::id())
-            ->where('team_id', '=', $id)
+            ->where('team_id', '=', $request->get('team_id'))
             ->delete();
 
         return response()

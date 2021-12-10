@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>Online Sports</title>
 
@@ -59,6 +60,14 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
 <script>
 
     let url = '/api/teams';
@@ -81,15 +90,13 @@
     }
     getTeams();
 
-    function addToFavourites(team_id, userid) {
-        var user_id = userid;
+    function addToFavourites(team_id) {
         var item_id = team_id;
 
         $.ajax({
             type: 'post',
             url: 'user',
             data: {
-                'id': user_id,
                 'team_id': item_id,
             },
             success: function () {
@@ -102,15 +109,13 @@
         });
     }
 
-    function deleteFromFavourites(team_id, userid) {
-        var user_id = userid;
+    function deleteFromFavourites(team_id, user_id) {
         var item_id = team_id;
-
+        var user_id = user_id;
         $.ajax({
             type: 'delete',
             url: 'user/' + user_id,
             data: {
-                'id': user_id,
                 'team_id': item_id,
             },
             success: function () {

@@ -6,7 +6,7 @@
             <span class="text-right w-full text-sm">{{ $team['team_name'] }}</span>
             <img class="" width="25" height="25" src="{{ $team['team_badge'] }}">
             <button id="deletefavourite{{ $team['team_key'] }}"
-                    onClick="deleteFromFavourites({{$team['team_key']}}, {{ Auth::id() }})"
+                    onClick="deleteFromFavourites({{$team['team_key']}}, {{ Auth::user() }})"
                     name="addfavourite"
                     class="btn btn-lg"
                     style="color: #ad1707; {{ $team->isFavourited ? '' : 'display: none;' }}">
@@ -15,7 +15,7 @@
                 </svg>
             </button>
             <button id="addfavourites{{$team['team_key']}}"
-                    onClick="addToFavourites({{$team['team_key']}}, {{ Auth::id() }})"
+                    onClick="addToFavourites({{$team['team_key']}})"
                     name="deletefavourite"
                     class="btn btn-lg"
                     style="{{ $team->isFavourited ? 'display: none;' : '' }}">
