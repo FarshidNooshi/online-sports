@@ -50,8 +50,8 @@ class UserController extends Controller
             $obj['team'] = $team;
 
             foreach ($response as $match) {
-                if ($match['match_hometeam_id'] == $team->team_id || $match['match_awayteam_id'] == $team->team_id) {
-                    $obj['match'] = $match;
+                if ($match['match_hometeam_id'] == $team->team_key || $match['match_awayteam_id'] == $team->team_key) {
+                    $obj['match'][] = $match;
                 }
             }
 
