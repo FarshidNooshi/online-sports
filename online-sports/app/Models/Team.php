@@ -23,6 +23,7 @@ class Team extends Model
     protected $fillable = [
         'team_key',
         'team_name',
-        'team_badge'
+        'team_badge',
+        'league_id'
     ];
 }

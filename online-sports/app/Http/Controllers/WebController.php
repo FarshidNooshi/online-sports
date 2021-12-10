@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Competition;
+use App\Models\Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -62,5 +63,18 @@ class WebController extends Controller
                     'data' => $data
                 ])->render()
             ]);
+    }
+
+    /**
+     * Getting the list of teams.
+     *
+     * @return JsonResponse
+     */
+    public function teams(): JsonResponse
+    {
+        $teams = Team::all();
+
+        return response()
+            ->json($teams->toArray());
     }
 }

@@ -22,6 +22,7 @@ class CreateTeamsTable extends Migration
             $table->integer('team_key');
             $table->string('team_name');
             $table->longText('team_badge');
+            $table->integer('league_id');
             $table->timestamps();
         });
     }
