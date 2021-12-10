@@ -81,31 +81,48 @@
     }
     getTeams();
 
-    // document.querySelector('#date_input').addEventListener('change', (e) => {
-    //     url = '/api/events?from=' + e.target.value + '&to=' + e.target.value;
-    //
-    //     let loader = `
-    //             <div id="teams_container" class="text-white">
-    //                 <div class="animate-pulse flex flex-col">`;
-    //     for (let i = 0; i < 13; i++) {
-    //         loader += `
-    //                 <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
-    //                     <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
-    //                     <div class="bg-gray-300 rounded-full h-6 w-6"></div>
-    //                     <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
-    //                         <div class="bg-gray-300 h-4 w-full"></div>
-    //                     </div>
-    //                     <div class="bg-gray-300 rounded-full h-6 w-6"></div>
-    //                     <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
-    //                 </div>`;
-    //     }
-    //     loader += `
-    //                 </div>
-    //             </div>`;
-    //     document.getElementById('teams_container').innerHTML = loader;
-    //
-    //     xhr.abort();
-    // });
+    function addToFavourites(team_id, userid) {
+        var user_id = userid;
+        var item_id = team_id;
+
+        $.ajax({
+            type: 'post',
+            url: 'user',
+            data: {
+                'id': user_id,
+                'team_id': item_id,
+            },
+            success: function () {
+                $('#addfavourites' + item_id).hide();
+                $('#deletefavourite' + item_id).show();
+            },
+            error: function () {
+                document.innerHTML = '<h2 class="text-center text-red-400 animate-pulse">log in first</h2>';
+            }
+        });
+    }
+
+    function deleteFromFavourites(team_id, userid) {
+        var user_id = userid;
+        var item_id = team_id;
+
+        $.ajax({
+            type: 'delete',
+            url: 'user/' + user_id,
+            data: {
+                'id': user_id,
+                'team_id': item_id,
+            },
+            success: function () {
+                $('#addfavourites' + item_id).show();
+                $('#deletefavourite' + item_id).hide();
+            },
+            error: function () {
+                document.innerHTML = '<h2 class="text-center text-red-400 animate-pulse">log in first</h2>';
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
