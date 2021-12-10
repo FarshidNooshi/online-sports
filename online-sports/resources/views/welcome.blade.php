@@ -37,13 +37,9 @@
                 </div>
             @endif
 
-            <div class="container mt-14 mx-auto p-3 max-w-xl">
-                <div class="relative mb-1">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
-                </div>
+            <div class="container min-h-screen mt-14 mx-auto p-3 max-w-xl">
+                <input id="date_input" value="<?php echo date('Y-m-d') ?>" type="date" class="mb-1 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                
                 <div id="matches_container" class="text-white">
                     <div class="animate-pulse flex flex-col">
                         @for ($i = 0; $i < 10; $i++)
@@ -62,11 +58,11 @@
             </div>
         </div>
 
-        <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/datepicker.bundle.js"></script>
         <script>
 
+            let url = '/api/events';
             const getMatches = () => {
-                fetch('/api/events')
+                fetch(url)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('matches_container').innerHTML = data.html;
@@ -75,6 +71,12 @@
             }
             getMatches();
             let interval = setInterval(getMatches, 20000);
+
+
+            document.querySelector('#date_input').addEventListener('change', (e) => {
+                url = '/api/events?from=' + e.target.value + '&to=' + e.target.value;
+                getMatches();
+            });
         </script>
     </body>
 </html>
