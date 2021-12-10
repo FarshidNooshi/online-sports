@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Handling the user routes for teams.
@@ -27,7 +27,7 @@ class UserController extends Controller
         $from = $request->get('from', date('Y-m-d'));
         $to = $request->get('to', date('Y-m-d'));
 
-        $teams = Auth::user()->teams;
+        $teams = Auth::user()->teams(Auth::id());
         $data = [];
 
         foreach ($teams as $team) {
@@ -46,15 +46,16 @@ class UserController extends Controller
             curl_close($curl);
 
             $response = json_decode($resp, true);
-            if (isset($response['error']) && $response['error'] == 404) {
-                continue;
-            }
+            $obj = [];
+            $obj['team'] = $team;
 
             foreach ($response as $match) {
                 if ($match['match_hometeam_id'] == $team->team_id || $match['match_awayteam_id'] == $team->team_id) {
-                    $data[] = $match;
+                    $obj['match'] = $match;
                 }
             }
+
+            $data[] = $obj;
         }
 
         return response()
@@ -69,9 +70,11 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        Auth::user()
-            ->teams()
-            ->sync($request->get('team_id'));
+        DB::table('teams_users')
+            ->insert([
+               'user_id' => Auth::id(),
+               'team_id' => $request->get('team_id')
+            ]);
 
         return response()
             ->json([

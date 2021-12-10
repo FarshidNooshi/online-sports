@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -45,8 +48,22 @@ class User extends Authenticatable
     /**
      * Each user has its favorite team.
      */
-    public function teams()
+    public function teams($id): Collection
     {
-        $this->hasMany(Team::class, 'team_id');
+        $ids = DB::table('teams_users')
+            ->select('team_id')
+            ->where('user_id', '=', $id)
+            ->get();
+
+        $teams = collect();
+
+        foreach ($ids as $id) {
+            $team = Team::query()
+                ->where('team_key', '=', $id->team_id)
+                ->first();
+            $teams->add($team);
+        }
+
+        return $teams;
     }
-}
+ }
