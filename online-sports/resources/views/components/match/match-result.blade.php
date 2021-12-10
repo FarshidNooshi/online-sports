@@ -6,7 +6,11 @@
             <span class="">{{ $match['match_hometeam_score'] }} - {{ $match['match_awayteam_score'] }}</span>
             <span class="text-xs text-green-600">{{ $match['match_status'] }}</span>
         @else
-            <span class="text-gray-500">{{ $match['match_time'] }}</span>
+            <span class="text-gray-500">
+                <?php 
+                echo date("H:i", strtotime('+150 minutes', strtotime($match['match_time'])));
+                ?>
+            </span>
         @endif
 
     </div>
