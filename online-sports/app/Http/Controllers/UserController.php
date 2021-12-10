@@ -70,6 +70,18 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        $res = DB::table('teams_users')
+            ->where('user_id', '=', Auth::id())
+            ->where('team_id', '=', $request->get('team_id'))
+            ->exists();
+
+        if ($res) {
+            return response()
+                ->json([
+                    'status' => 'FAIL'
+                ]);
+        }
+
         DB::table('teams_users')
             ->insert([
                'user_id' => Auth::id(),
@@ -90,11 +102,12 @@ class UserController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        Auth::user()
-            ->teams()
-            ->sync($id);
+        DB::table('teams_users')
+            ->where('user_id', '=', Auth::id())
+            ->where('team_id', '=', $id)
+            ->delete();
 
-        return \response()
+        return response()
             ->json([
                 'status' => 'OK'
             ]);
