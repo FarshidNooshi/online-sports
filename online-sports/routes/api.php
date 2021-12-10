@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('events', [WebController::class, 'index']);
     //->middleware(['auth']);
+
+Route::get('teams', [WebController::class, 'teams']);
