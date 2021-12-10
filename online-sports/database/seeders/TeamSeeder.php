@@ -43,7 +43,8 @@ class TeamSeeder extends Seeder
                     ->firstOrCreate([
                         'team_key' => $team['team_key'],
                         'team_name' => $team['team_name'],
-                        'team_badge' => $team['team_badge']
+                        'team_badge' => $team['team_badge'],
+                        'league_id' => $league_id,
                     ]);
             }
         }
