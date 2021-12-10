@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,10 +37,13 @@
                 </div>
             @endif
 
-            <div class="container mt-14 mx-auto p-3 max-w-xl text-white" id="matches_container">
-                <div class="animate-pulse flex flex-col">
-                    @for ($i = 0; $i < 10; $i++)
-                        <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 40px 25px 1fr;">
+            <div class="container min-h-screen mt-14 mx-auto p-3 max-w-xl">
+                <input id="date_input" value="<?php echo date('Y-m-d') ?>" type="date" class="mb-1 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                
+                <div id="matches_container" class="text-white">
+                    <div class="animate-pulse flex flex-col">
+                        @for ($i = 0; $i < 13; $i++)
+                        <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
                             <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
                             <div class="bg-gray-300 rounded-full h-6 w-6"></div>
                             <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
@@ -49,22 +52,65 @@
                             <div class="bg-gray-300 rounded-full h-6 w-6"></div>
                             <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
                         </div>    
-                    @endfor
+                        @endfor
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <script>
 
+            let url = '/api/events';
+            let interval = null;
+            let xhr = null;
             const getMatches = () => {
-                fetch('/api/events')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('matches_container').innerHTML = data.html;
-                        console.log(data);
-                    });
+                xhr = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+                        if (data.html.length > 0) {
+                            document.getElementById('matches_container').innerHTML = data.html;
+                        } else {
+                            document.getElementById('matches_container').innerHTML = '<h2 class="text-center text-red-400 animate-pulse">No matches found</h2>';
+                        }
+                    },
+                });
             }
             getMatches();
-            let interval = setInterval(getMatches, 20000);
+            ineterval = setInterval(getMatches, 20000);
+
+            document.querySelector('#date_input').addEventListener('change', (e) => {
+                url = '/api/events?from=' + e.target.value + '&to=' + e.target.value;
+
+                let loader = `
+                <div id="matches_container" class="text-white">
+                    <div class="animate-pulse flex flex-col">`;
+                for (let i = 0; i < 13; i++) {
+                    loader += `
+                    <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
+                        <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
+                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                        <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
+                            <div class="bg-gray-300 h-4 w-full"></div>
+                        </div>
+                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
+                        <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
+                    </div>`;
+                }
+                loader += `
+                    </div>
+                </div>`;
+                document.getElementById('matches_container').innerHTML = loader;
+
+                clearInterval(interval);
+                xhr.abort();
+                getMatches();
+                interval = setInterval(getMatches, 20000);
+            });
         </script>
     </body>
 </html>
