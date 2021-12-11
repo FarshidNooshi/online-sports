@@ -83,7 +83,7 @@ class WebController extends Controller
                 if ($team->team_key == $u_team->team_key)
                     $flag = true;
             }
-            $team['select'] = $flag;
+            $team['favorite'] = $flag;
         }
 
         return response()
