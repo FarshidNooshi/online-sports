@@ -6,6 +6,7 @@ use App\Models\Competition;
 use App\Models\Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Web controller handles the requests API.
@@ -73,6 +74,17 @@ class WebController extends Controller
     public function teams(): JsonResponse
     {
         $teams = Team::all();
+        $user_teams = Auth::user()
+            ->teams(Auth::id());
+
+        foreach ($teams as $team) {
+            $flag = false;
+            foreach ($user_teams as $u_team) {
+                if ($team->team_key == $u_team->team_key)
+                    $flag = true;
+            }
+            $team['select'] = $flag;
+        }
 
         return response()
             ->json([
