@@ -5,7 +5,7 @@
             style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
             <span class="text-right w-full text-sm">{{ $team['team_name'] }}</span>
             <img class="" width="25" height="25" src="{{ $team['team_badge'] }}">
-            @if(!$team['favorite'])
+            @if($team['favorite'])
                 <button id="deletefavourite{{ $team['team_key'] }}"
                         onClick="deleteFromFavourites({{$team['team_key']}}, {{ Auth::user() }})"
                         name="addfavourite"

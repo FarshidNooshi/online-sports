@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +29,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('user', UserController::class)
     ->only(['index', 'store', 'destroy']);
+
+Route::get('/all-teams', [WebController::class, 'teams']);
 
 require __DIR__.'/auth.php';

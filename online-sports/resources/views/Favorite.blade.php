@@ -70,7 +70,7 @@
 
 <script>
 
-    let url = '/api/teams';
+    let url = '/all-teams';
     let interval = null;
     let xhr = null;
     const getTeams = () => {

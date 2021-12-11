@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Competition;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +70,7 @@ class WebController extends Controller
     /**
      * Getting the list of teams.
      *
+     * @param $id
      * @return JsonResponse
      */
     public function teams(): JsonResponse
