@@ -51,7 +51,7 @@ class User extends Authenticatable
     public function teams($id): Collection
     {
         $ids = DB::table('teams_users')
-            ->select('team_id')
+            ->select('team_key')
             ->where('user_id', '=', $id)
             ->get();
 
@@ -59,7 +59,7 @@ class User extends Authenticatable
 
         foreach ($ids as $id) {
             $team = Team::query()
-                ->where('team_key', '=', $id->team_id)
+                ->where('team_key', '=', $id->team_key)
                 ->first();
             $teams->add($team);
         }
