@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/teams', function() {
-    return view('Favorite');
+    return view('favorite');
 });
 
 Route::get('/dashboard', function () {

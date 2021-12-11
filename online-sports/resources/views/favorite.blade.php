@@ -97,7 +97,7 @@
             type: 'post',
             url: 'user',
             data: {
-                'team_id': item_id,
+                'team_key': item_id,
             },
             success: function () {
                 $('#addfavourites' + item_id).hide();
@@ -116,7 +116,7 @@
             type: 'delete',
             url: 'user/' + user_id,
             data: {
-                'team_id': item_id,
+                'team_key': item_id,
             },
             success: function () {
                 $('#addfavourites' + item_id).show();
