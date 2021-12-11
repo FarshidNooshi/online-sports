@@ -72,7 +72,7 @@ class UserController extends Controller
     {
         $res = DB::table('teams_users')
             ->where('user_id', '=', Auth::id())
-            ->where('team_key', '=', $request->get('team_id'))
+            ->where('team_key', '=', $request->get('team_key'))
             ->exists();
 
         if ($res) {
@@ -85,7 +85,7 @@ class UserController extends Controller
         DB::table('teams_users')
             ->insert([
                'user_id' => Auth::id(),
-               'team_key' => $request->get('team_id')
+               'team_key' => $request->get('team_key')
             ]);
 
         return response()
@@ -104,7 +104,7 @@ class UserController extends Controller
     {
         DB::table('teams_users')
             ->where('user_id', '=', Auth::id())
-            ->where('team_id', '=', $request->get('team_id'))
+            ->where('team_key', '=', $request->get('team_key'))
             ->delete();
 
         return response()
