@@ -55,8 +55,8 @@ class TeamController extends Controller
             ->where('team_key', '=', $team_key)
             ->firstOrFail();
 
-        $from = date('Y-m-d');
-        $to = date('Y-m-d');
+        $from = '2021-8-13';
+        $to = '2022-5-22';
 
         $league_id = $team->league_id;
         $APIkey = $this->API_KEY;
