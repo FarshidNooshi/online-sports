@@ -53,12 +53,38 @@ class TeamController extends Controller
     {
         $team = Team::query()
             ->where('team_key', '=', $team_key)
-            ->first();
+            ->firstOrFail();
 
+        $from = date('Y-m-d');
+        $to = date('Y-m-d');
+
+        $league_id = $team->league_id;
+        $APIkey = $this->API_KEY;
+        $URL = "https://apiv3.apifootball.com/?action=get_events&from=$from&to=$to&league_id=$league_id&APIkey=$APIkey";
+
+        $curl = curl_init($URL);
+        curl_setopt($curl, CURLOPT_URL, $URL);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($resp, true);
+        $obj = [];
+
+        foreach ($response as $match) {
+            if ($match['match_hometeam_id'] == $team->team_key || $match['match_awayteam_id'] == $team->team_key) {
+                $obj[] = $match;
+            }
+        }
 
         return response()
             ->json([
-                $team
+                'team' => $team,
+                'matches' => $obj
             ]);
     }
 }
