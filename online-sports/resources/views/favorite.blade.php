@@ -70,7 +70,7 @@
 
 <script>
 
-    let url = '/all-teams';
+    let url = '/api/teams';
     let interval = null;
     let xhr = null;
     const getTeams = () => {
@@ -97,7 +97,7 @@
             type: 'post',
             url: 'user',
             data: {
-                'team_key': item_id,
+                'team_id': item_id,
             },
             success: function () {
                 $('#addfavourites' + item_id).hide();
@@ -116,7 +116,7 @@
             type: 'delete',
             url: 'user/' + user_id,
             data: {
-                'team_key': item_id,
+                'team_id': item_id,
             },
             success: function () {
                 $('#addfavourites' + item_id).show();
