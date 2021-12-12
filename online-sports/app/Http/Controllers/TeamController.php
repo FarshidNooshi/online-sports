@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class TeamController extends Controller
 {
+    // Website API key
+    protected $API_KEY = "e017ebb8a6a65ad9c26acf1eb955aaa8a334da8e1530cb9a7e522f1738818a21";
+
     /**
      * Getting the list of all teams for a user.
      *
@@ -37,6 +40,25 @@ class TeamController extends Controller
                 'html' => view('components.team.team', [
                     'teams' => $teams
                 ])->render()
+            ]);
+    }
+
+    /**
+     * Get a team profile.
+     *
+     * @param $team_key
+     * @return JsonResponse
+     */
+    public function show($team_key): JsonResponse
+    {
+        $team = Team::query()
+            ->where('team_key', '=', $team_key)
+            ->first();
+
+
+        return response()
+            ->json([
+                $team
             ]);
     }
 }

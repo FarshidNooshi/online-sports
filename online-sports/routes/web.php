@@ -38,6 +38,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Get list of user favorite teams
     Route::get('/all-teams', [TeamController::class, 'index']);
+
+    // Get a team profile page
+    Route::get('/team/{team_key}', [TeamController::class, 'show']);
+
 });
 
 require __DIR__.'/auth.php';
