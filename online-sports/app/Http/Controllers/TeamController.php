@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Handling the teams functionalities.
@@ -86,5 +87,30 @@ class TeamController extends Controller
                 'team' => $team,
                 'matches' => $obj
             ]);
+    }
+
+
+    /**
+     * Getting top 10 popular teams.
+     *
+     */
+    public function top10()
+    {
+        $top_keys = DB::table('teams_users')
+            ->select('team_key', DB::raw('count user_id as total'))
+            ->groupBy('team_key')
+            ->orderBy('total')
+            ->limit(10);
+
+        $teams = collect();
+        foreach ($top_keys as $key) {
+            $team = Team::query()
+                ->where('team_key', '=', $key->team_key);
+            $team['popularity'] = $key->total;
+            $teams->add($team);
+        }
+
+        return response()
+            ->json($teams);
     }
 }
