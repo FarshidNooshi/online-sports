@@ -97,15 +97,17 @@ class TeamController extends Controller
     public function top10(): JsonResponse
     {
         $top_keys = DB::table('teams_users')
-            ->select('team_key', DB::raw('count user_id as total'))
+            ->select('team_key', DB::raw('count(user_id) as total'))
             ->groupBy('team_key')
-            ->orderBy('total')
-            ->limit(10);
+            ->orderBy('total', 'desc')
+            ->limit(10)
+            ->get();
 
         $teams = collect();
         foreach ($top_keys as $key) {
             $team = Team::query()
-                ->where('team_key', '=', $key->team_key);
+                ->where('team_key', '=', $key->team_key)
+                ->first();
             $team['popularity'] = $key->total;
             $teams->add($team);
         }
