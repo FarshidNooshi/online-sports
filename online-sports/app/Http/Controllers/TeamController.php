@@ -94,7 +94,7 @@ class TeamController extends Controller
      * Getting top 10 popular teams.
      *
      */
-    public function top10()
+    public function top10(): JsonResponse
     {
         $top_keys = DB::table('teams_users')
             ->select('team_key', DB::raw('count user_id as total'))
