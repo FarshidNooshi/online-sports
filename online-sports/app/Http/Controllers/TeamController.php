@@ -45,7 +45,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Get a team profile.
+     * Get a team profile by its team key.
      *
      * @param $team_key
      * @return JsonResponse
@@ -91,8 +91,9 @@ class TeamController extends Controller
 
 
     /**
-     * Getting top 10 popular teams.
+     * Getting top 10 popular teams of our website.
      *
+     * @return JsonResponse
      */
     public function top10(): JsonResponse
     {
