@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,21 +15,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Welcome route
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/teams', function() {
-    return view('favorite');
+// Auth middleware routes
+Route::middleware(['auth'])->group(function () {
+    // Get user teams
+    Route::get('/teams', function() {
+        return view('favorite');
+    });
+
+    // User dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Managing favorite teams
+    Route::resource('user', UserController::class)
+        ->only(['index', 'store', 'destroy']);
+
+    // Get list of user favorite teams
+    Route::get('/all-teams', [TeamController::class, 'index']);
+
+    // Get a team profile page
+    Route::get('/team/{team_key}', [TeamController::class, 'show']);
+
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::resource('user', UserController::class)
-    ->only(['index', 'store', 'destroy']);
-
-Route::get('/all-teams', [WebController::class, 'teams']);
 
 require __DIR__.'/auth.php';

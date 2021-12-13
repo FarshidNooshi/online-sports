@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Get the list of the events
 Route::get('events', [WebController::class, 'index']);
-    //->middleware(['auth']);
