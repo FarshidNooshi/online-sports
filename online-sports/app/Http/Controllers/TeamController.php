@@ -112,6 +112,8 @@ class TeamController extends Controller
             $teams->add($team);
         }
 
-        return view('top-ten');
+        return view('top-ten', [
+            'teams' => $teams
+        ]);
     }
 }
