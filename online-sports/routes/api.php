@@ -23,5 +23,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Get the list of the events
 Route::get('events', [WebController::class, 'index']);
 
-// Get the list of top 10 teams in our website
-Route::get('top-ten', [TeamController::class, 'top10']);

@@ -20,6 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Get the list of top 10 teams in our website
+Route::get('/top-ten', [TeamController::class, 'top10']);
+
 // Auth middleware routes
 Route::middleware(['auth'])->group(function () {
     // Get user teams
