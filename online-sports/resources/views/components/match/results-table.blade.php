@@ -9,6 +9,7 @@
         @foreach ($league['matches'] as $match)
             @include('components.match.match-result', [
                 'match' => $match,
+                'show_time' => $show_time
             ])
         @endforeach
     </div>

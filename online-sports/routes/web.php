@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     // Get a team profile page
     Route::get('/team/{team_key}', [TeamController::class, 'show']);
 
+
 });
 
 require __DIR__.'/auth.php';

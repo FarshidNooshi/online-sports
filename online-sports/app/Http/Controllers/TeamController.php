@@ -48,9 +48,9 @@ class TeamController extends Controller
      * Get a team profile by its team key.
      *
      * @param $team_key
-     * @return JsonResponse
+     *
      */
-    public function show($team_key): JsonResponse
+    public function show($team_key)
     {
         $team = Team::query()
             ->where('team_key', '=', $team_key)
@@ -82,11 +82,10 @@ class TeamController extends Controller
             }
         }
 
-        return response()
-            ->json([
-                'team' => $team,
-                'matches' => $obj
-            ]);
+        return view('components.team.team-detail', [
+                    'team' => $team,
+                    'matches' => $obj
+                ])->render();
     }
 
 
