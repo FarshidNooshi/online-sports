@@ -31,9 +31,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // User dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
 
     // Managing favorite teams
     Route::resource('user', UserController::class)
@@ -43,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/all-teams', [TeamController::class, 'index']);
 
     // Get a team profile page
-    Route::get('/team/{team_key}', [TeamController::class, 'show']);
+    Route::get('/team/{team_key}', [TeamController::class, 'show'])->name('team.profile');
 
 
 });

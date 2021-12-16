@@ -16,15 +16,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index()
     {
         $teams = Auth::user()
             ->teams(Auth::id());
-
-        return response()
-            ->json($teams);
+        return view('dashboard', [
+            'teams' => $teams
+        ]);
     }
 
     /**
