@@ -93,9 +93,8 @@ class TeamController extends Controller
     /**
      * Getting top 10 popular teams of our website.
      *
-     * @return JsonResponse
      */
-    public function top10(): JsonResponse
+    public function top10()
     {
         $top_keys = DB::table('teams_users')
             ->select('team_key', DB::raw('count(user_id) as total'))
@@ -113,7 +112,8 @@ class TeamController extends Controller
             $teams->add($team);
         }
 
-        return response()
-            ->json($teams);
+        return view('top-ten', [
+            'teams' => $teams
+        ]);
     }
 }
