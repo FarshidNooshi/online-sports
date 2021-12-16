@@ -41,93 +41,22 @@
     <div class="container min-h-screen mt-14 mx-auto p-3 max-w-xl">
 
         <div id="teams_container" class="text-white">
-            <div class="animate-pulse flex flex-col">
-                @for ($i = 0; $i < 13; $i++)
-                    <div class="grid gap-4 place-items-center bg-gray-800 h-16 w-full border-b border-gray-900" style="grid-template-columns: 1fr 25px 60px 25px 1fr;">
-                        <div class="bg-gray-300 w-20 h-3 ml-auto"></div>
-                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
-                        <div class="grid grid-flow-row gap-1 justify-items-center grid-rows-1 w-full">
-                            <div class="bg-gray-300 h-4 w-full"></div>
-                        </div>
-                        <div class="bg-gray-300 rounded-full h-6 w-6"></div>
-                        <div class="bg-gray-300 w-20 h-3 mr-auto"></div>
-                    </div>
-                @endfor
+
+            <div class="bg-gray-700">
+                <div class="flex pl-5 h-11 items-center border-b border-gray-900">
+                    <img height="20" width="20" src="{{ $team['team_badge']  }}" alt="">
+                    <span class="ml-4 text-sm font-mono">
+                        {{ $team['team_name'] }}
+                    </span>
+                </div>
+                @foreach ($matches as $match)
+                    @include('components.match.match-result', [
+                        'match' => $match,
+                        'show_time' => true
+                    ])
+                @endforeach
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
-
-<script>
-
-    let url = '/all-teams';
-    let interval = null;
-    let xhr = null;
-    const getTeams = () => {
-        xhr = $.ajax({
-            url: url,
-            type: 'GET',
-            async: true,
-            cache: false,
-            success: function (data) {
-                if (data.html != null) {
-                    document.getElementById('teams_container').innerHTML = data.html;
-                } else {
-                    document.getElementById('teams_container').innerHTML = '<h2 class="text-center text-red-400 animate-pulse">No teams found</h2>';
-                }
-            },
-        });
-    }
-    getTeams();
-
-    function addToFavourites(team_id) {
-        var item_id = team_id;
-
-        $.ajax({
-            type: 'post',
-            url: 'user',
-            data: {
-                'team_key': item_id,
-            },
-            success: function () {
-                $('#addfavourites' + item_id).hide();
-                $('#deletefavourite' + item_id).show();
-            },
-            error: function () {
-                document.innerHTML = '<h2 class="text-center text-red-400 animate-pulse">log in first</h2>';
-            }
-        });
-    }
-
-    function deleteFromFavourites(team_id, user_id) {
-        var item_id = team_id;
-        var user_id = user_id;
-        $.ajax({
-            type: 'delete',
-            url: 'user/' + user_id,
-            data: {
-                'team_key': item_id,
-            },
-            success: function () {
-                $('#addfavourites' + item_id).show();
-                $('#deletefavourite' + item_id).hide();
-            },
-            error: function () {
-                document.innerHTML = '<h2 class="text-center text-red-400 animate-pulse">log in first</h2>';
-            }
-        });
-    }
-
-</script>
-</body>
-</html>

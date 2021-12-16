@@ -59,7 +59,8 @@ class WebController extends Controller
         return response()
             ->json([
                 'html' => view('components.match.results-table', [
-                    'data' => $data
+                    'data' => $data,
+                    'show_time' => false
                 ])->render()
             ]);
     }
