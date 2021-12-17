@@ -35,6 +35,10 @@ class TeamController extends Controller
             }
             $team['favorite'] = $flag;
         }
+        
+        $teams = $teams->sortBy(function ($team) {
+            return -1 * $team->favorite;
+        });
 
         return response()
             ->json([
