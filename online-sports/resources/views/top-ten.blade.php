@@ -25,16 +25,19 @@
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         <x-application-navbar />
 
-        <div class="container min-h-screen mt-14 mx-auto p-3 max-w-md text-white">
+        <div class="container min-h-screen mt-14 mx-auto p-3 max-w-lg text-white">
             @foreach ($teams as $team)
-                <div class="bg-gray-700">
-                    <div
-                        class="flex p-5 items-center bg-gray-800 h-16 w-full border-b border-gray-900 hover:bg-gray-700 transition overflow-hidden">
-                        <span style="font-size: 2rem;" class="text-2xl mr-5">{{ $loop->index + 1 }}</span>
-                        <img class="mr-3 justify-self-start" width="40" height="40" src="{{ $team->team_badge }}">
-                        <span class=" text-lg font-bold">{{ $team->team_name }}</span>
+                <a href="{{ route('team.profile', $team->team_key) }}">
+                    <div class="bg-gray-700">
+                        <div
+                            class="flex p-5 items-center bg-gray-800 h-16 w-full border-b border-gray-900 hover:bg-gray-700 transition overflow-hidden">
+                            <span style="font-size: 2rem;" class="text-2xl mr-5 {{ $loop->index + 1 < 10 ? 'w-10 text-center' : '' }}">{{ $loop->index + 1 }}</span>
+                            <img class="mr-3 justify-self-start" width="40" height="40" src="{{ $team->team_badge }}">
+                            <span class=" text-lg font-bold">{{ $team->team_name }}</span>
+                            <span class="ml-auto text-sm font-bold">({{ $team->popularity }})</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
     </div>
