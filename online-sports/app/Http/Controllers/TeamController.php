@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class TeamController extends Controller
 {
     // Website API key
-    protected $API_KEY = "e017ebb8a6a65ad9c26acf1eb955aaa8a334da8e1530cb9a7e522f1738818a21";
+    protected $API_KEY = "bad871a77b653b7010bc3ce2852fac3b972badd1e198c3fc6aaa06edce3b7d64";
 
     /**
      * Getting the list of all teams for a user.
